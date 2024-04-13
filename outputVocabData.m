@@ -1,34 +1,39 @@
 function outputVocabData(vocabData, sessionStats, outFilename)
-% Write all vocabulary data, including the user rating for the data, to file.
-% vocabData is a cell array; each row stores the data of one word in the
-%   vocabulary.
-% sessionStats is the 1x4 cell array containing the statistics of the 
-%   entire session; it is organized as:
-%   {userRating, totalCount, correctCount, history}
-% outFilename names the output data file to be written:
-%   * output data file has the same format and the same number of lines as
-%     the input data file used to start the session.
-%   * First line of data file:  the number of words in the vocabulary,
-%     followed by the user rating for this vocabulary at the end of the
-%     session.
-%   * Each remaining line is the data for one word in the vocabulary.  The
-%     estimated time and word rating for each word reflect the result of
-%     the session.
-%   * Within each line, data items are delimited by tabs.
+%OUTPUTVOCABDATA Write vocabulary data to a file with session statistics.
+%
+%   OUTPUTVOCABDATA(vocabData, sessionStats, outFilename) writes vocabulary
+%   data from the cell array vocabData to a file specified by outFilename.
+%   The file includes the overall user rating from sessionStats.
+%
+%   vocabData is a cell array where each row corresponds to one word's data.
+%   sessionStats is a 1x4 cell array: {userRating, totalCount, correctCount, history}.
+%   outFilename is the name of the file where the data will be written.
 
-% Write you code below.
-[nr,~]=size(vocabData);
-fid=fopen(outFilename, 'w');
-fprintf(fid,'%d\t',nr);
-fprintf(fid,'%d\n',sessionStats{1});
+    % Determine the number of words in the vocabulary
+    [numRows, ~] = size(vocabData);
 
-%Prints information in vocabData to the selected file 
-for r=1:nr
-    fprintf(fid,'%d\t',vocabData{r,3});
-    fprintf(fid,'%d\t',vocabData{r,4});
-    fprintf(fid,'%s\t',vocabData{r,1});
-    fprintf(fid,'%s\n',vocabData{r,2});
-end 
+    % Open the file for writing
+    fid = fopen(outFilename, 'w');
+    if fid == -1
+        error('Failed to open file %s for writing.', outFilename);
+    end
 
-fclose(fid);
+    try
+        % Write the header with the number of words and user rating
+        fprintf(fid, '%d\t%d\n', numRows, sessionStats{1});
 
+        % Write each word's data to the file
+        for idx = 1:numRows
+            fprintf(fid, '%d\t%d\t%s\t%s\n', ...
+                    vocabData{idx, 3}, vocabData{idx, 4}, ...
+                    vocabData{idx, 1}, vocabData{idx, 2});
+        end
+    catch
+        % Close file and rethrow error if writing fails
+        fclose(fid);
+        rethrow(lasterror);
+    end
+
+    % Close the file
+    fclose(fid);
+end
