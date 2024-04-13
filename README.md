@@ -13,10 +13,10 @@ This MATLAB project is designed to facilitate vocabulary learning through intera
 ## Project Structure
 The project consists of several MATLAB functions working together to manage and run the vocabulary quizzes:
 
--**'readVocabData.m':** Reads vocabulary data from a specified file.
--**'singleQuestion.m':** Manages the presentation of a single vocabulary question, collects user input, and displays results.
--**'updateData.m':** Updates vocabulary data and session statistics based on the user's answer.
--**'outputVocabData.m':** Writes updated vocabulary data and session statistics to a file.
+- **'readVocabData.m':** Reads vocabulary data from a specified file.
+- **'singleQuestion.m':** Manages the presentation of a single vocabulary question, collects user input, and displays results.
+- **'updateData.m':** Updates vocabulary data and session statistics based on the user's answer.
+- **'outputVocabData.m':** Writes updated vocabulary data and session statistics to a file.
 
 ## Copyright
 
