@@ -27,7 +27,7 @@ function [vocabData, sessionStats] = updateData(vocabData, sessionStats, wordIdx
 
 end
 
-% Do not modify this subfunction
+% This subfunction is starter code for calculating new ratings using the Elo rating system.
 function [userRating, wordRating] = computeRating(userRating, wordRating, isCorrect, timeTaken, aveTimeTaken, baseKvalue)
     % Compute and return the new user rating and word rating based on the Elo rating system.
     correctChance = userRating / (userRating + wordRating);
